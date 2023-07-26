@@ -3,8 +3,8 @@ module sui_nft::onchain_game {
     use sui::object{ Self, UID };
     use sui::tx_context{ Self, TxContext };
     use sui::url{ Self, Url };
-    use sui::string{ Self, String };
-    use sui::option{ Self, Option };
+    use std::string{ Self, String };
+    use std::option{ Self, Option };
 
     struct GameAdminCap has key {
         id: UID

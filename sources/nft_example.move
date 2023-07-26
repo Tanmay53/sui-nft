@@ -1,6 +1,6 @@
 module sui_nft::nft_example {
     use sui::url::{ Self, Url };
-    use sui::string::{ Self, String };
+    use std::string::{ Self, String };
     use sui::object::{ Self, UID};
     use sui::transfer;
     use sui::tx_context::{ Self, TxContext };
