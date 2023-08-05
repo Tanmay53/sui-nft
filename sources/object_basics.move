@@ -1,8 +1,8 @@
 module sui_nft::object_basics {
-    sui::transfer;
-    sui::object::{ Self, UID };
-    sui::tx_context::{ Self, TxContext };
-    sui::dynamic_object_field as ofield;
+    use sui::transfer;
+    use sui::object::{ Self, UID };
+    use sui::tx_context::{ Self, TxContext };
+    use sui::dynamic_object_field as ofield;
 
     struct ObjectA has key {
         id: UID
@@ -25,7 +25,7 @@ module sui_nft::object_basics {
 
     public entry fun create_object_owned_by_object(parent: &mut ObjectA, ctx: &mut TxContext) {
         let child = ObjectB{ id: object::new(ctx) };
-        ofield::new(&mut parent.id, b"child", child);
+        ofield::add(&mut parent.id, b"child", child);
     }
 
     struct ObjectC has key {

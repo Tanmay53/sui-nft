@@ -1,11 +1,11 @@
 module sui_nft::onchain_identity {
-    use sui::object{ Self, UID };
+    use sui::object::{ Self, UID };
     use sui::transfer;
-    use sui::tx_context{ Self, TxContext };
-    use std::string{ Self, String };
-    use std::option{ Self, Option };
+    use sui::tx_context::{ Self, TxContext };
+    use std::string::{ Self, String };
+    use std::option::{ Self, Option };
 
-    const EProfileMismatch = 0;
+    const EProfileMismatch:u64 =  0;
 
     struct AdminCap has key {
         id: UID
@@ -35,14 +35,14 @@ module sui_nft::onchain_identity {
     }
 
     public entry fun change_bio(user_profile: &mut UserProfile, bio: vector<u8>, ctx: &mut TxContext) {
-        asset!( tx_context::sender(ctx) == user_profile.user_address, EProfileMismatch);
+        assert!( tx_context::sender(ctx) == user_profile.user_address, EProfileMismatch);
 
         let old_bio = option::swap_or_fill(&mut user_profile.bio, string::utf8(bio));
 
         _ = old_bio;
     }
 
-    public fun delete_profile(_: &AdminCap, user_profile: &mut UserProfile) {
+    public fun delete_profile(_: &AdminCap, user_profile: UserProfile) {
         let UserProfile{
             id,
             user_address: _,
